@@ -7,5 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jcalvino",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "easy-soap-request": "^2.3.0",
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "nodemon": "^1.18.7",
+    "soap": "^0.25.0"
+  }
 }

@@ -29,10 +29,14 @@ const xml = `
         </soapenv:Envelope>
 `;
 
-(async () => {
+async function consumirSoap() {
     const { response } = await soap(urlPreProduccion, headers, xml, 1000); // Optional timeout parameter(milliseconds)
     const { body, statusCode } = response;
     console.log(body);
     console.log(statusCode);
-})();
+}
+
+module.exports = {
+    consumirSoap: consumirSoap
+};
 

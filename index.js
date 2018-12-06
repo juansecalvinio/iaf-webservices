@@ -1,38 +1,13 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-const soap = require('easy-soap-request');
-//const fs = require('fs');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-const urlPreProduccion = 'https://geosaludpreproduccion:8080/geosaludpreprod/servlet/awsgeosaludexpone?wsdl';
+const app = express();
 
-const urlProduccion = 'http://geosalud.alexanderfleming.org/servlet/awsgeosaludexpone?wsdl';
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
-const headers = {
-    'Content-Type': 'text/xml;charset=UTF-8',
-};
+const puerto = 3335;
 
-const xml = `
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="Consolidado">
-        <soapenv:Header/>
-        <soapenv:Body>
-        <con:wsGeoSaludExpone.Execute>
-            <con:Tipows>InformarPagoPaciente</con:Tipows>
-            <con:Xmlin>
-                &lt;sdtInformarPagoPacienteIAF xmlns="Consolidado"&gt;
-            &lt;IdPaciente&gt;203019&lt;/IdPaciente&gt;
-            &lt;TipoOrdenOriginal&gt;1007&lt;/TipoOrdenOriginal&gt;
-            &lt;NumeroOrdenOriginal&gt;2379&lt;/NumeroOrdenOriginal&gt;
-            &lt;CancelaDeuda&gt;1&lt;/CancelaDeuda&gt;
-            &lt;/sdtInformarPagoPacienteIAF&gt;
-            </con:Xmlin>
-        </con:wsGeoSaludExpone.Execute>
-        </soapenv:Body>
-        </soapenv:Envelope>
-`;
-
-(async () => {
-    const { response } = await soap(urlPreProduccion, headers, xml, 1000); // Optional timeout parameter(milliseconds)
-    const { body, statusCode } = response;
-    console.log(body);
-    console.log(statusCode);
-})();
-
+app.listen(puerto, () => {
+    console.log(`Escuchando en el puerto ${puerto}`);
+})
